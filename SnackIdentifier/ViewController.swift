@@ -15,7 +15,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageView: UIImageView!
     
     let imagePicker = UIImagePickerController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
@@ -23,8 +23,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.allowsEditing = false
     }
     
-    @IBAction func cameraPressed(_ sender: UIBarButtonItem) {
+    // Tells the delegate (this class) the user has picked an image
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let userPickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            imageView.image = userPickedImage
+        }
+        
+        imagePicker.dismiss(animated: true, completion: nil)
     }
-
+    
+    @IBAction func cameraPressed(_ sender: UIBarButtonItem) {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
 }
 
